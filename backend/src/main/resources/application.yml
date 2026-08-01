@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/knowledgeos
+    username: postgres
+    password: Fahad@123
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+
+      embedding:
+        options:
+          model: nomic-embed-text
+      
+      chat:
+        options:
+          model: qwen2.5:3b
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+storage:
+  upload-dir: uploads
+
+chunking:
+  max-size: 1000
+  overlap: 150
+
+qdrant:
+  host: localhost
+  port: 6333
+  collection: knowledge_chunks
+
+knowledgeos:
+  retrieval:
+    top-k: 10
+    minimum-confidence: 0.75
+
+  search:
+    default-limit: 10
+    snippet-length: 200

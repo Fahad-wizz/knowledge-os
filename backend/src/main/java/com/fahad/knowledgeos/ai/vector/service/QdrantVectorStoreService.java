@@ -1,0 +1,139 @@
+package com.fahad.knowledgeos.ai.vector.service;
+
+import java.util.*;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClient;
+
+import com.fahad.knowledgeos.ai.vector.config.QdrantProperties;
+import com.fahad.knowledgeos.ai.vector.dto.CreateCollectionRequest;
+import com.fahad.knowledgeos.ai.vector.dto.Distance;
+import com.fahad.knowledgeos.ai.vector.dto.PointStruct;
+import com.fahad.knowledgeos.ai.vector.dto.QueryResponse;
+import com.fahad.knowledgeos.ai.vector.dto.ScoredPoint;
+import com.fahad.knowledgeos.ai.vector.dto.SearchPointsRequest;
+import com.fahad.knowledgeos.ai.vector.dto.UpsertRequest;
+import com.fahad.knowledgeos.ai.vector.dto.VectorParams;
+import com.fahad.knowledgeos.ai.vector.dto.VectorPayload;
+import com.fahad.knowledgeos.document.entity.DocumentChunk;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class QdrantVectorStoreService implements VectorStoreService {
+
+    private final RestClient restClient;
+    private final QdrantProperties properties;
+
+   @Override
+   public void initializeCollection() {
+
+        try {
+
+                CreateCollectionRequest request =
+                        new CreateCollectionRequest(
+                                new VectorParams(
+                                        768,
+                                        Distance.Cosine
+                                )
+                        );
+
+                restClient.put()
+                        .uri("/collections/{name}", properties.getCollection())
+                        .body(request)
+                        .retrieve()
+                        .toBodilessEntity();
+
+                System.out.println("✅ Collection created.");
+
+        } catch (HttpClientErrorException.Conflict ex) {
+
+                        System.out.println("✅ Collection already exists.");
+
+                }
+
+        }
+
+    @Override
+    public void store(
+            DocumentChunk chunk,
+            float[] embedding
+    ) {
+
+        System.out.println("==================================");
+        System.out.println("Storing chunk: " + chunk.getId());
+        System.out.println("Embedding size: " + embedding.length);
+
+        VectorPayload payload =
+        VectorPayload.builder()
+                .documentId(
+                        chunk.getDocumentContent()
+                             .getDocument()
+                             .getId())
+                .documentContentId(
+                        chunk.getDocumentContent().getId())
+                .documentName(
+                        chunk.getDocumentContent()
+                             .getDocument()
+                             .getOriginalFileName())
+                .chunkId(chunk.getId())
+                .chunkIndex(chunk.getChunkIndex())
+                .contentType(
+                        chunk.getDocumentContent()
+                             .getDocument()
+                             .getContentType())
+                .text(chunk.getChunkText())
+                .build();
+
+        PointStruct point =
+        new PointStruct(
+                chunk.getId(),
+                embedding,
+                payload
+        );
+
+        UpsertRequest request = new UpsertRequest(List.of(point));
+
+        try {
+
+                String response = restClient.put()
+                        .uri("/collections/{name}/points", properties.getCollection())
+                        .body(request)
+                        .retrieve()
+                        .body(String.class);
+
+                System.out.println("Qdrant Response: " + response);
+
+        } catch (Exception ex) {
+
+                ex.printStackTrace();
+
+        }
+       }
+
+       @Override
+                public List<ScoredPoint> search(
+                        float[] embedding,
+                        int limit) {
+
+                SearchPointsRequest request =
+                        SearchPointsRequest.builder()
+                                .query(embedding)
+                                .limit(limit)
+                                .build();
+
+                QueryResponse response =
+                        restClient.post()
+                                .uri("/collections/{name}/points/query",
+                                        properties.getCollection())
+                                .body(request)
+                                .retrieve()
+                                .body(QueryResponse.class);
+                System.out.println("Returned points: " + response.getResult().getPoints().size());
+
+                return response.getResult().getPoints();
+
+        }
+}
