@@ -43,8 +43,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<DocumentResponse> getAllDocuments() {
-
-        return documentRepository.findAll()
+        Long ownerId = currentUserService.getCurrentUserId();
+        return documentRepository
+                .findByOwnerId(ownerId)
                 .stream()
                 .map(DocumentMapper::toResponse)
                 .toList();
@@ -53,8 +54,14 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public DocumentResponse getDocumentById(Long id) {
 
-        Document document = documentRepository.findById(id)
-                .orElseThrow(() -> new DocumentNotFoundException(id));
+        Long ownerId = currentUserService.getCurrentUserId();
+
+        Document document =
+                documentRepository
+                        .findByIdAndOwnerId(id, ownerId)
+                        .orElseThrow(() ->
+                            new DocumentNotFoundException(id));
+
 
         return DocumentMapper.toResponse(document);
     }
@@ -62,7 +69,15 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public void deleteDocument(Long id) {
 
-        documentRepository.deleteById(id);
+        Long ownerId = currentUserService.getCurrentUserId();
+
+        Document document =
+                documentRepository
+                        .findByIdAndOwnerId(id, ownerId)
+                        .orElseThrow(() ->
+                                new DocumentNotFoundException(id));
+
+        documentRepository.delete(document);
     }
 
     @Override
