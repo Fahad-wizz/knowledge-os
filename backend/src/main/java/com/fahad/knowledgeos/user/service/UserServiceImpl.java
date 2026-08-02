@@ -31,4 +31,9 @@ public class UserServiceImpl
         return repository.existsByEmail(email);
     }
 
+    @Override
+    public Optional<User> findById(Long id) {
+        return repository.findById(id);
+    }
+
 }

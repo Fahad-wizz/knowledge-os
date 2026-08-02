@@ -1,5 +1,6 @@
 package com.fahad.knowledgeos.document.service;
 
+import com.fahad.knowledgeos.auth.security.CurrentUserService;
 import com.fahad.knowledgeos.common.exception.DocumentNotFoundException;
 import com.fahad.knowledgeos.common.mapper.DocumentMapper;
 import com.fahad.knowledgeos.document.dto.request.DocumentRequest;
@@ -10,6 +11,8 @@ import com.fahad.knowledgeos.document.entity.DocumentStatus;
 import com.fahad.knowledgeos.document.repository.DocumentRepository;
 import com.fahad.knowledgeos.document.storage.StorageService;
 import com.fahad.knowledgeos.document.storage.model.StoredFile;
+import com.fahad.knowledgeos.user.entity.User;
+import com.fahad.knowledgeos.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +28,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
     private final StorageService storageService;
+    private final CurrentUserService currentUserService;
+    private final UserService userService;
 
     @Override
     public DocumentResponse saveDocument(DocumentRequest request) {
@@ -69,7 +74,15 @@ public class DocumentServiceImpl implements DocumentService {
 
         StoredFile storedFile = storageService.store(file);
 
+        Long ownerId =
+        currentUserService.getCurrentUserId();
+
+        User owner =
+        userService.findById(ownerId)
+                .orElseThrow();
+
         Document document = Document.builder()
+                .owner(owner)
                 .originalFileName(storedFile.getOriginalFileName())
                 .storedFileName(storedFile.getStoredFileName())
                 .contentType(storedFile.getContentType())

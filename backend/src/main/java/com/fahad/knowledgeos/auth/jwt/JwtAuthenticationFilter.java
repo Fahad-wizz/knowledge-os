@@ -9,6 +9,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fahad.knowledgeos.auth.principal.AuthenticatedUser;
 import com.fahad.knowledgeos.user.entity.User;
 import com.fahad.knowledgeos.user.service.UserService;
 
@@ -41,10 +42,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+
         String token =
         authHeader.substring(7);
+
         String email =
         jwtService.extractUsername(token);
+
         if (SecurityContextHolder
             .getContext()
             .getAuthentication() != null) {
@@ -67,9 +71,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        AuthenticatedUser principal =
+        AuthenticatedUser.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .build();
+
         UsernamePasswordAuthenticationToken authentication =
         new UsernamePasswordAuthenticationToken(
-                user,
+                principal,
                 null,
                 List.of());
 
