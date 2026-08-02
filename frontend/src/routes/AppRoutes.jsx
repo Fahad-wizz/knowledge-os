@@ -6,7 +6,7 @@ import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import ProtectedRoute from "./ProtectedRoutes";
 import SearchPage from "@/features/Search/SearchPage";
 import ChatPage from "@/features/chat/ChatPage";
-import DocumentsPage from "@/features/documents/DocumentsPage";
+import DocumentsPage from "@/features/documents/pages/DocumentsPage";
 import SettingsPage from "@/features/Settings/SettingsPage";
 
 export default function AppRoutes() {

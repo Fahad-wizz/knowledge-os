@@ -8,11 +8,11 @@ public class DocumentResponse {
 
     private Long id;
 
-    private String name;
+    private String originalFileName;
 
     private String extension;
 
-    private Long size;
+    private Long fileSize;
 
     private String status;
 

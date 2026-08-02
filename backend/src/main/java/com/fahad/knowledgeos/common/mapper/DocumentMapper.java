@@ -24,9 +24,9 @@ public class DocumentMapper {
 
         return DocumentResponse.builder()
                 .id(document.getId())
-                .name(document.getOriginalFileName())
+                .originalFileName(document.getOriginalFileName())
                 .extension(document.getExtension())
-                .size(document.getFileSize())
+                .fileSize(document.getFileSize())
                 .status(document.getStatus().name())
                 .build();
     }
