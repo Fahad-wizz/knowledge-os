@@ -7,9 +7,11 @@ import lombok.Getter;
 @Builder
 public class LoginResponse {
 
-    private String token;
+    private String accessToken;
 
-    private String type;
+    private String tokenType;
+
+    private Long userId;
 
     private String fullName;
 
