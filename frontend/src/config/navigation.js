@@ -7,35 +7,34 @@ import {
 } from "lucide-react";
 
 export const navigation = [
-
     {
-        title: "Dashboard",
+        id: "dashboard",
+        label: "Dashboard",
         icon: LayoutDashboard,
         path: "/dashboard"
     },
-
     {
-        title: "Documents",
+        id: "documents",
+        label: "Documents",
         icon: FileText,
         path: "/documents"
     },
-
     {
-        title: "AI Chat",
+        id: "chat",
+        label: "AI Chat",
         icon: Bot,
         path: "/chat"
     },
-
     {
-        title: "Search",
+        id: "search",
+        label: "Search",
         icon: Search,
         path: "/search"
     },
-
     {
-        title: "Settings",
+        id: "settings",
+        label: "Settings",
         icon: Settings,
         path: "/settings"
     }
-
 ];

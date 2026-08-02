@@ -1,13 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import LoginPage from "@/pages/Login/LoginPage";
-import RegisterPage from "@/pages/Register/RegisterPage";
-import DashboardPage from "@/features/dashboard/components/DashboardPage";
+import LoginPage from "@/features/auth/pages/LoginPage";
+import RegisterPage from "@/features/auth/pages/RegisterPage";
+import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import ProtectedRoute from "./ProtectedRoutes";
-import SearchPage from "@/pages/Search/SearchPage";
-import ChatPage from "@/pages/Chat/ChatPage";
-import DocumentsPage from "@/pages/Documents/DocumentsPage";
-import SettingsPage from "@/pages/Settings/SettingsPage";
+import SearchPage from "@/features/Search/SearchPage";
+import ChatPage from "@/features/Chat/ChatPage";
+import DocumentsPage from "@/features/Documents/DocumentsPage";
+import SettingsPage from "@/features/Settings/SettingsPage";
 
 export default function AppRoutes() {
 

@@ -5,11 +5,11 @@ export default function DashboardLayout({ children }) {
 
     return (
 
-        <div className="flex h-screen bg-slate-950 text-white">
+        <div className="flex min-h-screen bg-slate-950 text-white">
 
             <Sidebar />
 
-            <div className="flex flex-1 flex-col overflow-hidden">
+            <div className="flex flex-1 flex-col">
 
                 <TopNavbar />
 

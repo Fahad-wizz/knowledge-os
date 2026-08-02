@@ -1,24 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 
 import { navigation } from "@/config/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
 
-    const { user, logout } = useAuth();
-
     const navigate = useNavigate();
 
+    const { user, logout } = useAuth();
+
     function handleLogout() {
+
         logout();
+
         navigate("/login");
+
     }
 
     return (
 
-        <aside className="flex w-64 flex-col border-r border-slate-800 bg-slate-900">
+        <aside className="flex h-screen w-64 flex-col border-r border-slate-800 bg-slate-900">
 
             {/* Logo */}
 
@@ -32,7 +34,7 @@ export default function Sidebar() {
 
                 <p className="mt-1 text-sm text-slate-400">
 
-                    AI Workspace
+                    Private AI Workspace
 
                 </p>
 
@@ -40,63 +42,70 @@ export default function Sidebar() {
 
             {/* Navigation */}
 
-            <nav className="flex-1 space-y-2 p-4">
+            <nav className="flex-1 p-4">
 
-                {navigation.map(item => {
+                <div className="space-y-2">
 
-                    const Icon = item.icon;
+                    {navigation.map((item) => {
 
-                    return (
+                        const Icon = item.icon;
 
-                        <NavLink
-                            key={item.path}
-                            to={item.path}
-                            className={({ isActive }) =>
+                        return (
 
-                                `flex items-center gap-3 rounded-lg px-4 py-3 transition-colors
-                                ${
-                                    isActive
-                                    ? "bg-blue-600 text-white"
-                                    : "text-slate-300 hover:bg-slate-800"
-                                }`
+                            <NavLink
+                                key={item.id}
+                                to={item.path}
+                                className={({ isActive }) =>
 
-                            }
-                        >
+                                    `flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 ${
+                                        isActive
+                                            ? "bg-blue-600 text-white shadow-lg"
+                                            : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                                    }`
 
-                            <Icon size={20} />
+                                }
+                            >
 
-                            {item.title}
+                                <Icon size={20} />
 
-                        </NavLink>
+                                {item.label}
 
-                    );
+                            </NavLink>
 
-                })}
+                        );
+
+                    })}
+
+                </div>
 
             </nav>
 
-            {/* User */}
+            {/* Footer */}
 
             <div className="border-t border-slate-800 p-4">
 
-                <p className="font-semibold">
+                <div>
 
-                    {user?.fullName}
+                    <p className="font-semibold">
 
-                </p>
+                        {user?.fullName}
 
-                <p className="text-sm text-slate-400">
+                    </p>
 
-                    {user?.email}
+                    <p className="text-sm text-slate-400">
 
-                </p>
+                        {user?.email}
+
+                    </p>
+
+                </div>
 
                 <button
                     onClick={handleLogout}
-                    className="mt-4 flex w-full items-center gap-2 rounded-lg bg-red-600 px-4 py-2 transition hover:bg-red-700"
+                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2 transition hover:bg-red-700"
                 >
 
-                    <LogOut size={18} />
+                    <LogOut size={18}/>
 
                     Logout
 

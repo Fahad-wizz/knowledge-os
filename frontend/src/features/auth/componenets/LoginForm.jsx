@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import authService from "@/services/authService";
+import authService from "@/features/auth/services/authService";
 import { useAuth } from "@/context/AuthContext";
 
 export default function LoginForm() {
