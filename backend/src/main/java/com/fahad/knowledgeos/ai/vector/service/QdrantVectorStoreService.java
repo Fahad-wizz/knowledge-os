@@ -17,6 +17,9 @@ import com.fahad.knowledgeos.ai.vector.dto.UpsertRequest;
 import com.fahad.knowledgeos.ai.vector.dto.VectorParams;
 import com.fahad.knowledgeos.ai.vector.dto.VectorPayload;
 import com.fahad.knowledgeos.document.entity.DocumentChunk;
+import com.fahad.knowledgeos.ai.vector.dto.Condition;
+import com.fahad.knowledgeos.ai.vector.dto.Filter;
+import com.fahad.knowledgeos.ai.vector.dto.Match;
 
 import lombok.RequiredArgsConstructor;
 
@@ -124,10 +127,21 @@ public class QdrantVectorStoreService implements VectorStoreService {
                         float[] embedding,
                         int limit, long ownerId) {
 
+                Filter filter =
+                        new Filter(
+                                List.of(
+                                        new Condition(
+                                                "ownerId",
+                                                new Match(ownerId)
+                                        )
+                                )
+                        );
+
                 SearchPointsRequest request =
                         SearchPointsRequest.builder()
                                 .query(embedding)
                                 .limit(limit)
+                                .filter(filter)
                                 .build();
 
                 QueryResponse response =

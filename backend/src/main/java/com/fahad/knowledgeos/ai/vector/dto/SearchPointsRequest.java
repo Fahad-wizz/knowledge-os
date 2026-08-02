@@ -15,6 +15,8 @@ public class SearchPointsRequest {
 
     private Integer limit;
 
+    private Filter filter;
+
     @JsonProperty("with_payload")
     @Builder.Default
     private Boolean withPayload = true;
