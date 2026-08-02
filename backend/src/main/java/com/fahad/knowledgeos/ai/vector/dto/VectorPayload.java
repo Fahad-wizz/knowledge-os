@@ -9,19 +9,21 @@ import lombok.*;
 @AllArgsConstructor
 public class VectorPayload {
 
+    private Long ownerId;
+
     private Long documentId;
 
-    private String documentName;
+    private Long documentContentId;
 
     private Long chunkId;
 
     private Integer chunkIndex;
 
+    private String documentName;
+
     private String contentType;
 
     private String text;
-
-    private Long documentContentId;
 
     // Generate getters and setters
 }

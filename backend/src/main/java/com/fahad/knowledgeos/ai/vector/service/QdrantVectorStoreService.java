@@ -60,6 +60,7 @@ public class QdrantVectorStoreService implements VectorStoreService {
     public void store(
             DocumentChunk chunk,
             float[] embedding
+            
     ) {
 
         System.out.println("==================================");
@@ -68,6 +69,11 @@ public class QdrantVectorStoreService implements VectorStoreService {
 
         VectorPayload payload =
         VectorPayload.builder()
+                .ownerId(
+                        chunk.getDocumentContent()
+                                .getDocument()
+                                .getOwner()
+                                .getId())
                 .documentId(
                         chunk.getDocumentContent()
                              .getDocument()
@@ -116,7 +122,7 @@ public class QdrantVectorStoreService implements VectorStoreService {
        @Override
                 public List<ScoredPoint> search(
                         float[] embedding,
-                        int limit) {
+                        int limit, long ownerId) {
 
                 SearchPointsRequest request =
                         SearchPointsRequest.builder()

@@ -11,6 +11,7 @@ import com.fahad.knowledgeos.ai.search.dto.SearchResponse;
 import com.fahad.knowledgeos.ai.search.dto.SearchResult;
 import com.fahad.knowledgeos.ai.vector.dto.ScoredPoint;
 import com.fahad.knowledgeos.ai.vector.service.VectorStoreService;
+import com.fahad.knowledgeos.auth.security.CurrentUserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,8 @@ public class SearchServiceImpl implements SearchService {
 
     private final SearchProperties properties;
 
+    private final CurrentUserService currentUserService;
+
     @Override
     public SearchResponse search(String query, Integer limit) {
 
@@ -33,8 +36,11 @@ public class SearchServiceImpl implements SearchService {
 
         float[] embedding = embeddingService.embed(query);
 
+        Long ownerId =
+        currentUserService.getCurrentUserId();
+
         List<ScoredPoint> points =
-                vectorStoreService.search(embedding, limit);
+                vectorStoreService.search(embedding, limit, ownerId);
 
         List<SearchResult> results = points.stream()
                 .map(this::toSearchResult)

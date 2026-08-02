@@ -16,7 +16,8 @@ public interface VectorStoreService {
 
     List<ScoredPoint> search(
         float[] embedding,
-        int limit
-);
+        int limit,
+        long ownerId
+    );
 
 }
