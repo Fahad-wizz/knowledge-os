@@ -1,7 +1,7 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 
 import WelcomeSection from "@/features/dashboard/components/WelcomeSection";
-import UploadCard from "@/features/dashboard/components/UploadCard";
+import UploadCard from "@/features/documents/components/UploadCard";
 import QuickSearchCard from "@/features/dashboard/components/QuickSearchCard";
 import RecentDocuments from "@/features/dashboard/components/RecentDocuments";
 

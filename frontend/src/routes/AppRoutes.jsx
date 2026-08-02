@@ -5,8 +5,8 @@ import RegisterPage from "@/features/auth/pages/RegisterPage";
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import ProtectedRoute from "./ProtectedRoutes";
 import SearchPage from "@/features/Search/SearchPage";
-import ChatPage from "@/features/Chat/ChatPage";
-import DocumentsPage from "@/features/Documents/DocumentsPage";
+import ChatPage from "@/features/chat/ChatPage";
+import DocumentsPage from "@/features/documents/DocumentsPage";
 import SettingsPage from "@/features/Settings/SettingsPage";
 
 export default function AppRoutes() {
