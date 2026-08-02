@@ -3,7 +3,7 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import WelcomeSection from "@/features/dashboard/components/WelcomeSection";
 import UploadCard from "@/features/documents/components/UploadCard";
 import QuickSearchCard from "@/features/dashboard/components/QuickSearchCard";
-import RecentDocuments from "@/features/dashboard/components/RecentDocuments";
+import RecentDocuments from "@/features/documents/components/RecentDocuments";
 
 export default function DashboardPage() {
 
