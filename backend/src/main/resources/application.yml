@@ -44,3 +44,7 @@ knowledgeos:
   search:
     default-limit: 10
     snippet-length: 200
+
+jwt:
+  secret: 4f7c4d96f4f5d2a74cdb1a0f74b31c57a6c1d95e7e3e9f92d4e3e11b6f3b2c6f
+  expiration: 86400000
