@@ -15,6 +15,11 @@ public class ChatResponse {
 
     private String answer;
 
+<<<<<<< HEAD
+=======
+    private Double confidence;
+
+>>>>>>> frontend/ProductFeatures
     private List<SearchResult> sources;
 
 }

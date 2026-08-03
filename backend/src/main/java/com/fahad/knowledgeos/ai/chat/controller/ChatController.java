@@ -36,6 +36,8 @@ public class ChatController {
 
                 .answer(rag.getAnswer())
 
+                .confidence(rag.getConfidence())
+
                 .sources(rag.getSources())
 
                 .build();
