@@ -1,11 +1,25 @@
-import { Brain } from "lucide-react";
-import { highlightText } from "../utils/highlightText";
+import {
+    FileText,
+    Hash,
+    Percent,
+    Copy,
+    Sparkles
+} from "lucide-react";
+
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardContent
+} from "@/components/ui/card";
+
+import { Button } from "@/components/ui/button";
+
+import { toast } from "sonner";
 
 export default function KnowledgePreview({
 
-    result,
-
-    query,
+    result
 
 }) {
 
@@ -13,149 +27,163 @@ export default function KnowledgePreview({
 
         return (
 
-            <div className="flex h-full min-h-[500px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-700">
+            <Card className="h-[650px]">
 
-                <Brain
-                    size={50}
-                    className="mb-4 text-slate-500"
-                />
+                <CardContent className="flex h-full items-center justify-center">
 
-                <h2 className="text-xl font-semibold">
+                    <div className="text-center">
 
-                    Select a Result
+                        <FileText
+                            className="mx-auto mb-4 h-12 w-12 text-slate-500"
+                        />
 
-                </h2>
+                        <h2 className="text-xl font-semibold">
 
-                <p className="mt-2 text-slate-400">
+                            Knowledge Preview
 
-                    The matching knowledge will appear here.
+                        </h2>
 
-                </p>
+                        <p className="mt-2 text-slate-400">
 
-            </div>
+                            Select a search result to preview it.
+
+                        </p>
+
+                    </div>
+
+                </CardContent>
+
+            </Card>
 
         );
 
     }
 
-    const parts = highlightText(result.snippet, query);
+    function copySnippet() {
 
-    const similarity = Math.round(result.score * 100);
+        navigator.clipboard.writeText(result.snippet);
+
+        toast.success("Snippet copied.");
+
+    }
 
     return (
 
-        <div className="rounded-xl border border-slate-700 bg-slate-900 p-6">
+        <Card className="sticky top-24 h-[650px]">
 
-            <div className="flex items-center justify-between">
+            <CardHeader>
 
-                <h2 className="text-2xl font-bold">
+                <CardTitle className="flex items-center gap-2">
+
+                    <FileText className="h-5 w-5 text-blue-500" />
 
                     {result.documentName}
 
-                </h2>
+                </CardTitle>
 
-                <span className="rounded-md bg-blue-600 px-3 py-1 text-xs">
+            </CardHeader>
 
-                    {similarity}% Match
+            <CardContent className="flex h-full flex-col">
 
-                </span>
+                {/* Metadata */}
 
-            </div>
+                <div className="grid grid-cols-2 gap-4 rounded-lg border border-slate-800 bg-slate-900 p-4">
 
-            <div className="mt-3 flex gap-2">
+                    <div>
 
-                <span className="rounded bg-slate-800 px-2 py-1 text-xs">
+                        <p className="text-xs text-slate-400">
 
-                    Chunk {result.chunkIndex}
+                            Similarity
 
-                </span>
+                        </p>
 
-            </div>
+                        <div className="mt-1 flex items-center gap-2">
 
-            <div className="mt-6 rounded-xl bg-slate-950 p-6">
+                            <Percent className="h-4 w-4 text-blue-500" />
 
-                <p className="leading-8 whitespace-pre-wrap text-slate-300">
+                            <span className="font-semibold">
 
-                    {
+                                {Math.round(result.score * 100)}%
 
-                        parts.map((part, index) =>
+                            </span>
 
-                            part.toLowerCase() === query.toLowerCase()
+                        </div>
 
-                                ? (
+                    </div>
 
-                                    <mark
+                    <div>
 
-                                        key={index}
+                        <p className="text-xs text-slate-400">
 
-                                        className="rounded bg-yellow-400 px-1 text-black"
+                            Chunk
 
-                                    >
+                        </p>
 
-                                        {part}
+                        <div className="mt-1 flex items-center gap-2">
 
-                                    </mark>
+                            <Hash className="h-4 w-4 text-blue-500" />
 
-                                )
+                            <span className="font-semibold">
 
-                                : (
+                                {result.chunkIndex}
 
-                                    <span key={index}>
+                            </span>
 
-                                        {part}
+                        </div>
 
-                                    </span>
+                    </div>
 
-                                )
+                </div>
 
-                        )
+                {/* Preview */}
 
-                    }
+                <div className="mt-6 flex-1 overflow-y-auto rounded-lg border border-slate-800 bg-slate-900 p-5">
 
-                </p>
+                    <p className="whitespace-pre-wrap leading-8 text-slate-300">
 
-            </div>
+                        {result.snippet}
 
-            <div className="mt-8 flex gap-3">
+                    </p>
 
-                <button
+                </div>
 
-                    className="
-                        rounded-lg
-                        bg-blue-600
-                        px-4
-                        py-2
-                        font-medium
-                        transition
-                        hover:bg-blue-700
-                    "
+                {/* Actions */}
 
-                >
+                <div className="mt-6 flex gap-3">
 
-                    Ask AI
+                    <Button
 
-                </button>
+                        variant="outline"
 
-                <button
+                        className="flex-1"
 
-                    className="
-                        rounded-lg
-                        border
-                        border-slate-700
-                        px-4
-                        py-2
-                        hover:bg-slate-800
-                    "
+                        onClick={copySnippet}
 
-                >
+                    >
 
-                    Open Source
+                        <Copy className="mr-2 h-4 w-4" />
 
-                </button>
+                        Copy
 
-            </div>
+                    </Button>
 
-        </div>
+                    <Button
+
+                        className="flex-1"
+
+                    >
+
+                        <Sparkles className="mr-2 h-4 w-4" />
+
+                        Ask AI
+
+                    </Button>
+
+                </div>
+
+            </CardContent>
+
+        </Card>
 
     );
 

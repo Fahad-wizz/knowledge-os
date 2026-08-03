@@ -1,5 +1,15 @@
-import { FileText } from "lucide-react";
-import { getConfidence } from "../utils/searchUtils";
+import {
+    FileText,
+    ChevronRight,
+    Hash
+} from "lucide-react";
+
+import {
+    Card,
+    CardContent
+} from "@/components/ui/card";
+
+import SimilarityBadge from "@/features/Search/components/SimilarityBadge";
 
 export default function SearchResultCard({
 
@@ -7,106 +17,101 @@ export default function SearchResultCard({
 
     selected,
 
-    onClick,
+    onClick
 
 }) {
 
-    const similarity = Math.round(result.score * 100);
-
-    const confidence = getConfidence(result.score);
-
-    const snippet =
-
-        result.snippet.length > 180
-
-            ? result.snippet.slice(0, 180) + "..."
-
-            : result.snippet;
+    const similarity =
+        Math.round(result.score * 100);
 
     return (
 
-        <div
+        <Card
 
             onClick={onClick}
 
             className={`
-                cursor-pointer
-                rounded-xl
-                border
-                p-4
-                transition-all
-                duration-200
-                hover:border-blue-500
-                hover:shadow-lg
 
-                ${
-                    selected
-                        ? "border-blue-500 bg-slate-800"
-                        : "border-slate-700 bg-slate-900"
+                cursor-pointer
+
+                transition-all
+
+                duration-200
+
+                hover:border-blue-500
+
+                hover:shadow-md
+
+                ${selected
+                    ? "border-blue-500 bg-slate-900"
+                    : ""
                 }
+
             `}
 
         >
 
-            <div className="flex justify-between items-start">
+            <CardContent className="space-y-4 p-5">
 
-                <div className="flex gap-3">
+                <div className="flex items-start justify-between">
 
-                    <FileText
+                    <div className="flex gap-3">
 
-                        size={20}
+                        <FileText
 
-                        className="mt-1 text-blue-400"
+                            className="mt-1 h-5 w-5 text-blue-500"
 
-                    />
+                        />
 
-                    <div>
+                        <div>
 
-                        <h3 className="font-semibold">
+                            <h3 className="font-semibold">
 
-                            {result.documentName}
+                                {result.documentName}
 
-                        </h3>
+                            </h3>
 
-                        <div className="mt-2 flex gap-2">
+                            <p className="mt-1 text-xs text-slate-400">
 
-                            <span className="rounded-md bg-slate-800 px-2 py-1 text-xs">
+                                Document ID #{result.documentId}
 
-                                Chunk {result.chunkIndex}
-
-                            </span>
+                            </p>
 
                         </div>
 
                     </div>
 
-                </div>
-
-                <div className="text-right">
-
-                    <p className={`text-xs ${confidence.color}`}>
-
-                        {confidence.label}
-
-                    </p>
-
-                    <p className="text-xs text-slate-500">
-
-                        {similarity}%
-
-                    </p>
+                    <SimilarityBadge score={result.score} />
 
                 </div>
 
-            </div>
+                <div className="flex items-center gap-2 text-xs text-slate-400">
 
-            <p className="mt-4 text-sm leading-6 text-slate-400">
+                    <Hash className="h-4 w-4" />
 
-                {snippet}
+                    Chunk {result.chunkIndex}
 
-            </p>
+                </div>
 
-        </div>
+                <p className="line-clamp-4 text-sm leading-7 text-slate-300">
+
+                    {result.snippet}
+
+                </p>
+
+                <div className="flex items-center justify-end">
+
+                    <ChevronRight
+
+                        className="h-5 w-5 text-slate-500"
+
+                    />
+
+                </div>
+
+            </CardContent>
+
+        </Card>
 
     );
 

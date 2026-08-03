@@ -1,36 +1,87 @@
 import SearchResultCard from "./SearchResultCard";
 
 export default function SearchResults({
+
     results,
-    selectedResult,
-    onSelect,
+
+    selected,
+
+    onSelect
+
 }) {
+
+    if (!results || results.length === 0) {
+
+        return (
+
+            <div className="flex h-[650px] items-center justify-center rounded-xl border border-slate-800 bg-slate-900">
+
+                <p className="text-slate-400">
+
+                    No matching documents found.
+
+                </p>
+
+            </div>
+
+        );
+
+    }
 
     return (
 
-        <div className="space-y-3 overflow-y-auto max-h-[70vh] pr-2">
+        <div className="flex h-[650px] flex-col rounded-xl border border-slate-800 bg-slate-900">
 
-            {
+            {/* Header */}
 
-                results.map((result) => (
+            <div className="border-b border-slate-800 px-5 py-4">
 
-                    <SearchResultCard
+                <h2 className="text-lg font-semibold">
 
-                        key={result.chunkId}
+                    Search Results
 
-                        result={result}
+                </h2>
 
-                        selected={
-                            selectedResult?.chunkId === result.chunkId
-                        }
+                <p className="mt-1 text-sm text-slate-400">
 
-                        onClick={() => onSelect(result)}
+                    {results.length} matching
+                    {results.length === 1 ? " result" : " results"}
 
-                    />
+                </p>
 
-                ))
+            </div>
 
-            }
+            {/* Result List */}
+
+            <div className="flex-1 space-y-4 overflow-y-auto p-4">
+
+                {
+
+                    results.map(result => (
+
+                        <SearchResultCard
+
+                            key={result.chunkId}
+
+                            result={result}
+
+                            selected={
+                                selected?.chunkId === result.chunkId
+                            }
+
+                            onClick={() =>
+
+                                onSelect(result)
+
+                            }
+
+                        />
+
+                    ))
+
+                }
+
+            </div>
 
         </div>
 

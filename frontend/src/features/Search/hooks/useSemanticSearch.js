@@ -1,16 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { searchKnowledge } from "../api/searchApi";
+import { semanticSearch } from "../api/searchApi";
 
 export default function useSemanticSearch(query) {
 
     return useQuery({
 
-        queryKey: ["search", query],
+        queryKey: [
 
-        queryFn: () => searchKnowledge(query),
+            "semantic-search",
 
-        enabled: query.trim().length > 0
+            query
+
+        ],
+
+        queryFn: () => semanticSearch(query),
+
+        enabled: query.trim().length > 0,
+
+        staleTime: 1000 * 60
 
     });
 

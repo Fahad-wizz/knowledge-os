@@ -1,74 +1,72 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, Sparkles, X } from "lucide-react";
+
+import { Input } from "@/components/ui/input";
 
 export default function SearchInput({
-    initialQuery = "",
+
+    query,
+
+    setQuery
+
 }) {
-
-    const navigate = useNavigate();
-
-    const [query, setQuery] = useState(initialQuery);
-
-    useEffect(() => {
-
-        setQuery(initialQuery);
-
-    }, [initialQuery]);
-
-    function handleSubmit(e) {
-
-        e.preventDefault();
-
-        if (!query.trim()) return;
-
-        navigate(`/search?q=${encodeURIComponent(query.trim())}`);
-
-    }
 
     return (
 
-        <form
-            onSubmit={handleSubmit}
-            className="relative"
-        >
+        <div className="relative">
 
             <Search
-                size={20}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+
+                className="absolute left-5 top-4 h-5 w-5 text-slate-400"
+
             />
 
-            <input
-
-                type="text"
+            <Input
 
                 value={query}
 
-                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Ask anything about your knowledge..."
 
-                placeholder="Search your knowledge..."
+                onChange={(e) =>
 
-                className="
-                    w-full
-                    rounded-xl
-                    border
-                    border-slate-700
-                    bg-slate-900
-                    py-4
-                    pl-12
-                    pr-5
-                    text-lg
-                    text-white
-                    outline-none
-                    transition
-                    focus:border-blue-500
-                    focus:ring-2
-                    focus:ring-blue-500/30
-                "
+                    setQuery(e.target.value)
+
+                }
+
+                className="h-14 rounded-xl border-slate-700 bg-slate-900 pl-14 pr-24 text-base"
 
             />
 
-        </form>
+            {
+
+                query && (
+
+                    <button
+
+                        onClick={() =>
+
+                            setQuery("")
+
+                        }
+
+                        className="absolute right-14 top-4 text-slate-400 hover:text-white"
+
+                    >
+
+                        <X className="h-5 w-5" />
+
+                    </button>
+
+                )
+
+            }
+
+            <Sparkles
+
+                className="absolute right-5 top-4 h-5 w-5 text-blue-500"
+
+            />
+
+        </div>
 
     );
 

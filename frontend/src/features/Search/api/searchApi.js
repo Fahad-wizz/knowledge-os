@@ -1,12 +1,13 @@
 import api from "@/api/axios";
 
-export async function searchKnowledge(query, limit = 10) {
+export async function semanticSearch(query) {
 
     const response = await api.get("/search", {
 
         params: {
-            query,
-            limit
+
+            query
+
         }
 
     });

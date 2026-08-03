@@ -1,32 +1,35 @@
 import { Search } from "lucide-react";
 
-export default function SearchHeader({
-    query,
-    totalResults,
-}) {
+export default function SearchHeader() {
+
     return (
-        <div className="space-y-2">
 
-            <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between">
 
-                <Search className="text-blue-500" size={28} />
+            <div>
 
-                <h1 className="text-3xl font-bold">
-                    Semantic Search
-                </h1>
+                <div className="flex items-center gap-3">
+
+                    <Search className="h-8 w-8 text-blue-500" />
+
+                    <h1 className="text-4xl font-bold">
+
+                        Knowledge Search
+
+                    </h1>
+
+                </div>
+
+                <p className="mt-3 text-slate-400">
+
+                    Search instantly across your indexed documents using AI.
+
+                </p>
 
             </div>
 
-            <p className="text-slate-400">
-
-                {totalResults} {totalResults === 1 ? "result" : "results"} found for
-
-                <span className="ml-2 font-semibold text-white">
-                    "{query}"
-                </span>
-
-            </p>
-
         </div>
+
     );
+
 }
