@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fahad.knowledgeos.document.entity.Document;
+import com.fahad.knowledgeos.knowledgesource.entity.KnowledgeSource;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,5 +43,9 @@ public class User {
     @OneToMany(mappedBy = "owner")
     @Builder.Default
     private List<Document> documents = new ArrayList<>();
+
+    // @OneToMany(mappedBy = "owner")
+    // @Builder.Default
+    // private List<KnowledgeSource> knowledgeSources = new ArrayList<>();
 
 }

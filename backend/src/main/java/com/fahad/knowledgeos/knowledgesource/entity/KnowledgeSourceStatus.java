@@ -1,5 +1,13 @@
 package com.fahad.knowledgeos.knowledgesource.entity;
 
-public class KnowledgeSourceStatus {
-    
+public enum KnowledgeSourceStatus {
+
+    ACTIVE,
+
+    INDEXING,
+
+    FAILED,
+
+    DISABLED
+
 }

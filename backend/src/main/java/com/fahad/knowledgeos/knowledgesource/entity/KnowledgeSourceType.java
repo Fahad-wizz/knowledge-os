@@ -1,5 +1,9 @@
 package com.fahad.knowledgeos.knowledgesource.entity;
 
-public class KnowledgeSourceType {
-    
+public enum KnowledgeSourceType {
+
+    FILE_UPLOAD,
+
+    LOCAL_FOLDER
+
 }
