@@ -13,6 +13,7 @@ import com.fahad.knowledgeos.knowledgesource.indexing.KnowledgeSourceIndexer;
 import com.fahad.knowledgeos.knowledgesource.scanner.FolderScanner;
 import com.fahad.knowledgeos.knowledgesource.service.KnowledgeSourceService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -63,6 +64,7 @@ public class KnowledgeSourceController {
 
     }
 
+    @Hidden
     @GetMapping("/scan")
     public List<String> scan(
             @RequestParam String path) {

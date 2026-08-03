@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fahad.knowledgeos.ai.embedding.EmbeddingService;
 // import com.fahad.knowledgeos.ai.llm.service.LlmService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@Hidden
 @RequestMapping("/api/test")
 @RequiredArgsConstructor
 public class AiTestController {

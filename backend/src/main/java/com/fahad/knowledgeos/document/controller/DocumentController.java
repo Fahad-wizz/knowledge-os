@@ -8,9 +8,7 @@ import com.fahad.knowledgeos.document.ingestion.DocumentIngestionService;
 import com.fahad.knowledgeos.document.processing.DocumentProcessingService;
 import com.fahad.knowledgeos.document.service.DocumentService;
 
-// import io.swagger.v3.oas.annotations.Operation;
-// import io.swagger.v3.oas.annotations.responses.ApiResponse;
-// import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -31,14 +29,6 @@ public class DocumentController {
     private final DocumentProcessingService processingService;
     private final DocumentIngestionService ingestionService;
 
-    // @Operation(
-    // summary = "Create a document",
-    // description = "Stores document metadata in the database."
-    // )
-    // @ApiResponses({
-    //     @ApiResponse(responseCode = "201", description = "Document created"),
-    //     @ApiResponse(responseCode = "400", description = "Validation failed")
-    // })
     @PostMapping
     public DocumentResponse createDocument(
             @Valid @RequestBody DocumentRequest request) {
@@ -46,14 +36,12 @@ public class DocumentController {
         return documentService.saveDocument(request);
     }
 
-    // @Operation(summary = "Get all documents")
     @GetMapping
     public List<DocumentResponse> getAllDocuments() {
 
         return documentService.getAllDocuments();
     }
 
-    // @Operation(summary = "Get document by ID")
     @GetMapping("/{id}")
     public DocumentResponse getDocumentById(
             @PathVariable Long id) {
@@ -61,7 +49,6 @@ public class DocumentController {
         return documentService.getDocumentById(id);
     }
 
-    // @Operation(summary = "Delete document by ID")
     @DeleteMapping("/{id}")
     public void deleteDocument(
             @PathVariable Long id) {
@@ -79,6 +66,7 @@ public class DocumentController {
                 .body(ingestionService.upload(file));
     }
 
+    @Hidden
     @PostMapping("/{id}/extract")
     public ResponseEntity<ExtractionResponse> extractDocument(
             @PathVariable Long id) {
