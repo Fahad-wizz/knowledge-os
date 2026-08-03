@@ -1,26 +1,38 @@
-import { useAuth } from "@/context/AuthContext";
-
 export default function WelcomeSection() {
 
-    const { user } = useAuth();
+    const hour = new Date().getHours();
+
+    let greeting = "Good Evening";
+
+    if (hour < 12) {
+
+        greeting = "Good Morning";
+
+    } else if (hour < 18) {
+
+        greeting = "Good Afternoon";
+
+    }
 
     return (
 
-        <section className="mb-8">
+        <div>
 
-            <h1 className="text-4xl font-bold tracking-tight">
+            <h1 className="text-4xl font-bold">
 
-                Welcome back, {user?.fullName} 👋
+                {greeting} 👋
 
             </h1>
 
             <p className="mt-2 text-slate-400">
 
-                Search, upload and chat with your private knowledge base.
+                Welcome back to KnowledgeOS.
+
+                Search, chat and manage your local knowledge.
 
             </p>
 
-        </section>
+        </div>
 
     );
 

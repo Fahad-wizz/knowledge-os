@@ -1,29 +1,80 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 
-import WelcomeSection from "@/home/components/WelcomeSection";
-import UploadSource from "@/features/sources/components/AddSourceDialog";
-import HeroSearch from "@/home/components/HeroSearch";
-import RecentSource from "@/home/components/RecentSource";
+import useDashboard from "../hooks/useDashboard";
+
+import WelcomeSection from "../components/WelcomeSection";
+import HeroSearch from "../components/HeroSearch";
+import QuickActions from "../components/QuickActions";
+import KnowledgeStats from "../components/KnowledgeStats";
+import RecentSources from "../components/RecentSources";
 
 export default function HomePage() {
+
+    const {
+
+        data,
+
+        isLoading,
+
+        error
+
+    } = useDashboard();
+
+    if (isLoading) {
+
+        return (
+
+            <DashboardLayout>
+
+                <p>
+
+                    Loading dashboard...
+
+                </p>
+
+            </DashboardLayout>
+
+        );
+
+    }
+
+    if (error) {
+
+        return (
+
+            <DashboardLayout>
+
+                <p className="text-red-500">
+
+                    Failed to load dashboard.
+
+                </p>
+
+            </DashboardLayout>
+
+        );
+
+    }
 
     return (
 
         <DashboardLayout>
 
-            <WelcomeSection />
+            <div className="space-y-10">
 
-            <div className="grid gap-6 md:grid-cols-2">
-
-                <UploadSource />
+                <WelcomeSection />
 
                 <HeroSearch />
 
-            </div>
+                <QuickActions />
 
-            <div className="mt-6">
+                <KnowledgeStats
+                    dashboard={data}
+                />
 
-                <RecentSource />
+                <RecentSources
+                    sources={data.recentSources}
+                />
 
             </div>
 

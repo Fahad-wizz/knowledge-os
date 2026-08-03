@@ -1,5 +1,10 @@
 import { useState } from "react";
+
+import { Search } from "lucide-react";
+
 import { useNavigate } from "react-router-dom";
+
+import { Input } from "@/components/ui/input";
 
 export default function HeroSearch() {
 
@@ -29,24 +34,30 @@ export default function HeroSearch() {
 
         <form
             onSubmit={handleSubmit}
-            className="mx-auto max-w-3xl"
+            className="mt-8"
         >
 
-            <input
+            <div className="relative">
 
-                value={query}
+                <Search
+                    className="absolute left-4 top-3.5 h-5 w-5 text-slate-400"
+                />
 
-                onChange={(e) =>
+                <Input
 
-                    setQuery(e.target.value)
+                    className="h-12 pl-12"
 
-                }
+                    placeholder="Search your knowledge..."
 
-                placeholder="Search your knowledge..."
+                    value={query}
 
-                className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-6 py-5 text-lg"
+                    onChange={e =>
+                        setQuery(e.target.value)
+                    }
 
-            />
+                />
+
+            </div>
 
         </form>
 
