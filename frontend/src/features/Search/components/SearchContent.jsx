@@ -1,5 +1,7 @@
-import SearchResults from "./SearchResults";
+import EmptyResults from "./EmptyResults";
 import KnowledgePreview from "./KnowledgePreview";
+import SearchLoading from "./SearchLoading";
+import SearchResults from "./SearchResults";
 
 export default function SearchContent({
 
@@ -11,19 +13,35 @@ export default function SearchContent({
 
     isLoading,
 
-    error
+    error,
+
+    query
 
 }) {
 
     if (isLoading) {
 
-        return <p>Searching...</p>;
+        return <SearchLoading />;
 
     }
 
     if (error) {
 
-        return <p>Search failed.</p>;
+        return (
+
+            <div className="rounded-xl border border-red-500 bg-red-500/10 p-6">
+
+                Failed to search documents.
+
+            </div>
+
+        );
+
+    }
+
+    if (!results.length) {
+
+        return <EmptyResults />;
 
     }
 
@@ -34,9 +52,13 @@ export default function SearchContent({
             <div className="col-span-5">
 
                 <SearchResults
+
                     results={results}
+
                     selectedResult={selectedResult}
+
                     onSelect={onSelect}
+
                 />
 
             </div>
@@ -45,6 +67,7 @@ export default function SearchContent({
 
                 <KnowledgePreview
                     result={selectedResult}
+                    query={query}
                 />
 
             </div>

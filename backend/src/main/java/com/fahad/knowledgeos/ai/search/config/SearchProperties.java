@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 public class SearchProperties {
 
-    private Double scoreThreshold = 0.75;
+    private Float scoreThreshold;
 
-    private Integer defaultLimit = 5;
+    private Integer defaultLimit;
 
-    private Integer snippetLength = 200;
+    private Integer snippetLength;
 
 
 }

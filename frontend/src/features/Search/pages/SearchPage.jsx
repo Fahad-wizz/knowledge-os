@@ -8,6 +8,7 @@ import useSemanticSearch from "../hooks/useSemanticSearch";
 import SearchHeader from "../components/SearchHeader";
 import SearchInput from "../components/SearchInput";
 import SearchContent from "../components/SearchContent";
+import KnowledgePreview from "../components/KnowledgePreview";
 
 export default function SearchPage() {
 
@@ -54,6 +55,12 @@ export default function SearchPage() {
                     onSelect={setSelectedResult}
                     isLoading={isLoading}
                     error={error}
+                    query={query}
+                />
+
+                <KnowledgePreview
+                    result={selectedResult}
+                    query={query}
                 />
 
             </div>

@@ -43,6 +43,7 @@ knowledgeos:
 
   search:
     default-limit: 10
+    score-threshold: 0.5
     snippet-length: 200
 
 jwt:

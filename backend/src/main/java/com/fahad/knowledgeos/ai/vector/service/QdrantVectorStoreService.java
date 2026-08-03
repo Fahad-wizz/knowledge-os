@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
+import com.fahad.knowledgeos.ai.search.config.SearchProperties;
 import com.fahad.knowledgeos.ai.vector.config.QdrantProperties;
 import com.fahad.knowledgeos.ai.vector.dto.CreateCollectionRequest;
 import com.fahad.knowledgeos.ai.vector.dto.Distance;
@@ -29,6 +30,7 @@ public class QdrantVectorStoreService implements VectorStoreService {
 
     private final RestClient restClient;
     private final QdrantProperties properties;
+    private final SearchProperties searchProperties;
 
    @Override
    public void initializeCollection() {
@@ -142,6 +144,7 @@ public class QdrantVectorStoreService implements VectorStoreService {
                                 .query(embedding)
                                 .limit(limit)
                                 .filter(filter)
+                                .scoreThreshold(searchProperties.getScoreThreshold())
                                 .build();
 
                 QueryResponse response =

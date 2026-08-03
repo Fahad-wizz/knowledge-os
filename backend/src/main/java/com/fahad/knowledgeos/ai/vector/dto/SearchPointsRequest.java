@@ -17,6 +17,9 @@ public class SearchPointsRequest {
 
     private Filter filter;
 
+    @JsonProperty("score_threshold")
+    private Float scoreThreshold;
+
     @JsonProperty("with_payload")
     @Builder.Default
     private Boolean withPayload = true;

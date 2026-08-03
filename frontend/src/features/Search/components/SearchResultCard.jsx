@@ -1,4 +1,5 @@
 import { FileText } from "lucide-react";
+import { getConfidence } from "../utils/searchUtils";
 
 export default function SearchResultCard({
 
@@ -6,11 +7,13 @@ export default function SearchResultCard({
 
     selected,
 
-    onClick
+    onClick,
 
 }) {
 
     const similarity = Math.round(result.score * 100);
+
+    const confidence = getConfidence(result.score);
 
     const snippet =
 
@@ -31,47 +34,73 @@ export default function SearchResultCard({
                 rounded-xl
                 border
                 p-4
-                transition
+                transition-all
+                duration-200
+                hover:border-blue-500
+                hover:shadow-lg
+
                 ${
                     selected
-
                         ? "border-blue-500 bg-slate-800"
-
-                        : "border-slate-800 bg-slate-900 hover:bg-slate-800"
+                        : "border-slate-700 bg-slate-900"
                 }
             `}
 
         >
 
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between items-start">
 
-                <div className="flex items-center gap-2">
+                <div className="flex gap-3">
 
-                    <FileText size={18} />
+                    <FileText
 
-                    <h3 className="font-semibold">
+                        size={20}
 
-                        {result.documentName}
+                        className="mt-1 text-blue-400"
 
-                    </h3>
+                    />
+
+                    <div>
+
+                        <h3 className="font-semibold">
+
+                            {result.documentName}
+
+                        </h3>
+
+                        <div className="mt-2 flex gap-2">
+
+                            <span className="rounded-md bg-slate-800 px-2 py-1 text-xs">
+
+                                Chunk {result.chunkIndex}
+
+                            </span>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-                <span className="text-xs text-blue-400">
+                <div className="text-right">
 
-                    {similarity}% Match
+                    <p className={`text-xs ${confidence.color}`}>
 
-                </span>
+                        {confidence.label}
+
+                    </p>
+
+                    <p className="text-xs text-slate-500">
+
+                        {similarity}%
+
+                    </p>
+
+                </div>
 
             </div>
 
-            <p className="mt-2 text-xs text-slate-400">
-
-                Chunk #{result.chunkIndex}
-
-            </p>
-
-            <p className="mt-3 text-sm text-slate-300">
+            <p className="mt-4 text-sm leading-6 text-slate-400">
 
                 {snippet}
 

@@ -1,36 +1,18 @@
 import SearchResultCard from "./SearchResultCard";
 
 export default function SearchResults({
-
     results,
-
     selectedResult,
-
-    onSelect
-
+    onSelect,
 }) {
-
-    if (results.length === 0) {
-
-        return (
-
-            <div className="rounded-xl border border-slate-800 p-6">
-
-                No matching results.
-
-            </div>
-
-        );
-
-    }
 
     return (
 
-        <div className="space-y-3">
+        <div className="space-y-3 overflow-y-auto max-h-[70vh] pr-2">
 
             {
 
-                results.map(result => (
+                results.map((result) => (
 
                     <SearchResultCard
 
