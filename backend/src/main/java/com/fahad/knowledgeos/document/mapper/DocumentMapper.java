@@ -1,4 +1,4 @@
-package com.fahad.knowledgeos.common.mapper;
+package com.fahad.knowledgeos.document.mapper;
 
 import com.fahad.knowledgeos.document.dto.request.DocumentRequest;
 import com.fahad.knowledgeos.document.dto.response.DocumentResponse;

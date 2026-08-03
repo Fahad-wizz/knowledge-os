@@ -17,4 +17,6 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     Optional<Document> findByOwnerIdAndStoragePath(
         Long ownerId,
         String storagePath);
+
+    long countByOwnerId(Long ownerId);
 }

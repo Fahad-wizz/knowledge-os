@@ -23,4 +23,6 @@ public interface DocumentChunkRepository
         void deleteByDocumentContentDocumentId(
         Long documentId);
 
+        long countByDocumentContentDocumentOwnerId(Long ownerId);
+
 }

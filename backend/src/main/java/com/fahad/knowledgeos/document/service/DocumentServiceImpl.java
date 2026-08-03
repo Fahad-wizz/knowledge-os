@@ -9,12 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fahad.knowledgeos.auth.security.CurrentUserService;
 import com.fahad.knowledgeos.common.exception.DocumentNotFoundException;
-import com.fahad.knowledgeos.common.mapper.DocumentMapper;
 import com.fahad.knowledgeos.document.dto.request.DocumentRequest;
 import com.fahad.knowledgeos.document.dto.response.DocumentResponse;
 import com.fahad.knowledgeos.document.dto.response.UploadDocumentResponse;
 import com.fahad.knowledgeos.document.entity.Document;
 import com.fahad.knowledgeos.document.entity.DocumentStatus;
+import com.fahad.knowledgeos.document.mapper.DocumentMapper;
 import com.fahad.knowledgeos.document.repository.DocumentRepository;
 import com.fahad.knowledgeos.document.storage.StorageService;
 import com.fahad.knowledgeos.document.storage.model.StoredFile;

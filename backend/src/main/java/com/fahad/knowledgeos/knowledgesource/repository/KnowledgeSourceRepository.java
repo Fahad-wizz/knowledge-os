@@ -20,4 +20,11 @@ public interface KnowledgeSourceRepository
             Long ownerId,
             String rootPath);
 
+    long countByOwnerId(Long ownerId);
+
+    List<KnowledgeSource> findTop5ByOwnerIdOrderByUpdatedAtDesc(Long ownerId);
+
+    Optional<KnowledgeSource> findTopByOwnerIdAndLastIndexedAtIsNotNullOrderByLastIndexedAtDesc(
+        Long ownerId);
+
 }
