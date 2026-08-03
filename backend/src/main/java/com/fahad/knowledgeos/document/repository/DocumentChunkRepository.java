@@ -10,11 +10,17 @@ public interface DocumentChunkRepository
         extends JpaRepository<DocumentChunk, Long> {
 
           List<DocumentChunk> findByDocumentContentIdAndChunkIndexBetweenOrderByChunkIndexAsc(
-        Long documentContentId,
-        Integer start,
-        Integer end
-);
+                Long documentContentId,
+                Integer start,
+                Integer end
+        );
 
         boolean existsByDocumentContentId(Long documentContentId);
+
+        List<DocumentChunk> findByDocumentContentDocumentId(
+                Long documentId);
+
+        void deleteByDocumentContentDocumentId(
+        Long documentId);
 
 }

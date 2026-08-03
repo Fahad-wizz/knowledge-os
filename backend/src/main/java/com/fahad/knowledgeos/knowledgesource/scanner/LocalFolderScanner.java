@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 public class LocalFolderScanner implements FolderScanner {
 
     private static final Set<String> SUPPORTED_EXTENSIONS = Set.of(
-            "pdf");
+            "pdf",
+            "doc", "docx",
+            "txt",
+            "md", "markdown");
 
     @Override
     public List<Path> scan(Path root) {

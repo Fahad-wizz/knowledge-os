@@ -9,6 +9,7 @@ import org.springframework.web.client.RestClient;
 import com.fahad.knowledgeos.ai.search.config.SearchProperties;
 import com.fahad.knowledgeos.ai.vector.config.QdrantProperties;
 import com.fahad.knowledgeos.ai.vector.dto.CreateCollectionRequest;
+import com.fahad.knowledgeos.ai.vector.dto.DeletePointsRequest;
 import com.fahad.knowledgeos.ai.vector.dto.Distance;
 import com.fahad.knowledgeos.ai.vector.dto.PointStruct;
 import com.fahad.knowledgeos.ai.vector.dto.QueryResponse;
@@ -159,4 +160,42 @@ public class QdrantVectorStoreService implements VectorStoreService {
                 return response.getResult().getPoints();
 
         }
+        
+        @Override
+        public void delete(List<Long> pointIds) {
+
+        if (pointIds.isEmpty()) {
+                return;
+        }
+
+        DeletePointsRequest request =
+                new DeletePointsRequest(pointIds);
+
+        try {
+
+                String response =
+                        restClient.post()
+                                .uri(
+                                        "/collections/{name}/points/delete",
+                                        properties.getCollection())
+                                .body(request)
+                                .retrieve()
+                                .body(String.class);
+
+                System.out.println(
+                        "Qdrant delete response: "
+                                + response);
+
+        }
+
+        catch (Exception ex) {
+
+                throw new RuntimeException(
+                        "Failed to delete vectors.",
+                        ex);
+
+        }
+
+        }
+        
 }

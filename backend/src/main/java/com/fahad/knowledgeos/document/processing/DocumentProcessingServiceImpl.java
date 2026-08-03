@@ -1,5 +1,8 @@
 package com.fahad.knowledgeos.document.processing;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fahad.knowledgeos.ai.embedding.EmbeddingPipelineService;
+import com.fahad.knowledgeos.ai.vector.service.VectorStoreService;
 import com.fahad.knowledgeos.common.exception.DocumentNotFoundException;
 import com.fahad.knowledgeos.document.chunking.ChunkingManager;
 import com.fahad.knowledgeos.document.chunking.model.Chunk;
@@ -32,9 +36,15 @@ public class DocumentProcessingServiceImpl
     private final DocumentContentRepository documentContentRepository;
 
     private final ExtractionManager extractionManager;
+
     private final ChunkingManager chunkingManager;
+
     private final DocumentChunkRepository chunkRepository;
+
     private final EmbeddingPipelineService embeddingPipelineService;
+
+    private final VectorStoreService vectorStoreService;
+
     @Transactional
     @Override
     public ExtractionResponse process(Long id) {
@@ -83,6 +93,66 @@ public class DocumentProcessingServiceImpl
                 .documentId(id)
                 .extractedText(result.getText())
                 .build();
-    }
+        }
+
+        @Override
+        @Transactional
+        public void deleteArtifacts(Long documentId) {
+
+        List<DocumentChunk> chunks =
+                chunkRepository.findByDocumentContentDocumentId(
+                        documentId);
+
+        List<Long> pointIds =
+                chunks.stream()
+                        .map(DocumentChunk::getId)
+                        .toList();
+
+        vectorStoreService.delete(pointIds);
+
+        chunkRepository.deleteByDocumentContentDocumentId(
+                documentId);
+
+        documentContentRepository.deleteByDocument_Id(
+                documentId);
+
+        }
+
+        @Override
+        @Transactional
+        public ExtractionResponse reprocess(Long documentId) {
+
+        Document document =
+                documentRepository.findById(documentId)
+                        .orElseThrow(() ->
+                                new DocumentNotFoundException(documentId));
+
+        deleteArtifacts(documentId);
+
+        ExtractionResponse response =
+                process(documentId);
+
+        try {
+
+                long lastModified =
+                        Files.getLastModifiedTime(
+                                Path.of(document.getStoragePath()))
+                                .toMillis();
+
+                document.setLastModified(lastModified);
+
+                documentRepository.save(document);
+
+        } catch (IOException ex) {
+
+                throw new RuntimeException(
+                        "Failed to update lastModified.",
+                        ex);
+
+        }
+
+        return response;
+
+        }
 
 }

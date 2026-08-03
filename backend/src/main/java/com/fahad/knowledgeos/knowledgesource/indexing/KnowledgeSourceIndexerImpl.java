@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.fahad.knowledgeos.common.exception.KnowledgeSourceNotFoundException;
 import com.fahad.knowledgeos.document.entity.Document;
 import com.fahad.knowledgeos.document.ingestion.DocumentIngestionService;
+import com.fahad.knowledgeos.document.processing.DocumentProcessingService;
 import com.fahad.knowledgeos.document.service.DocumentService;
 import com.fahad.knowledgeos.knowledgesource.dto.response.IndexingSummary;
 import com.fahad.knowledgeos.knowledgesource.entity.KnowledgeSource;
@@ -33,6 +34,8 @@ public class KnowledgeSourceIndexerImpl
     private final DocumentIngestionService ingestionService;
 
     private final DocumentService documentService;
+
+    private final DocumentProcessingService processingService;
 
     @Override
     public IndexingSummary index(Long knowledgeSourceId) {
@@ -73,20 +76,19 @@ public class KnowledgeSourceIndexerImpl
                         if (existing.get().getLastModified()
                                 == currentLastModified) {
 
-                            skipped++;
-
-                            continue;
+                                skipped++;
+                                continue;
 
                         }
 
-                        /*
-                        * File changed.
-                        *
-                        * Re-index support
-                        * will be implemented next sprint.
-                        */
+                        processingService.reprocess(
+                                existing.get().getId());
 
-                    }
+                        indexed++;
+
+                        continue;
+
+                }
 
                     ingestionService.register(file);
 

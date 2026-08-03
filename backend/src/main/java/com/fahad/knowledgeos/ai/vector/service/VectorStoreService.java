@@ -20,4 +20,5 @@ public interface VectorStoreService {
         long ownerId
     );
 
+    void delete(List<Long> pointIds);
 }

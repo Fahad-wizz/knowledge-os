@@ -8,4 +8,7 @@ import com.fahad.knowledgeos.document.entity.DocumentContent;
 public interface DocumentContentRepository extends          JpaRepository<DocumentContent, Long> {
 
     Optional<DocumentContent> findByDocumentId(Long documentId);
+
+    void deleteByDocument_Id(
+        Long documentId);
 }
