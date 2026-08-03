@@ -18,8 +18,6 @@ public final class KnowledgeSourceMapper {
                 .displayName(request.getDisplayName())
                 .rootPath(request.getRootPath())
                 .type(request.getType())
-                .status(
-                        com.fahad.knowledgeos.knowledgesource.entity.KnowledgeSourceStatus.ACTIVE)
                 .owner(owner)
                 .build();
 

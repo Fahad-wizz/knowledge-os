@@ -1,5 +1,7 @@
 package com.fahad.knowledgeos.document.ingestion;
 
+import java.nio.file.Path;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +29,20 @@ public class DocumentIngestionServiceImpl
         processingService.process(response.getId());
 
         return response;
+    }
+
+    @Override
+    public UploadDocumentResponse register(
+            Path path) {
+
+        UploadDocumentResponse response =
+                documentService.register(path);
+
+        processingService.process(
+                response.getId());
+
+        return response;
+
     }
 
 }

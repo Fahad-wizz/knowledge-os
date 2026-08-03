@@ -72,4 +72,44 @@ public class LocalStorageService implements StorageService{
         return filename.substring(index + 1).toLowerCase();
     }
 
+    @Override
+    public StoredFile register(Path path) {
+
+        if (!Files.exists(path)) {
+
+            throw new IllegalArgumentException(
+                    "File not found.");
+
+        }
+
+        String filename =
+                path.getFileName().toString();
+
+        String extension =
+                getExtension(filename);
+
+        try {
+
+            return StoredFile.builder()
+                    .originalFileName(filename)
+                    .storedFileName(filename)
+                    .extension(extension)
+                    .contentType(
+                            Files.probeContentType(path))
+                    .fileSize(
+                            Files.size(path))
+                    .storagePath(
+                            path.toAbsolutePath().toString())
+                    .build();
+
+        }
+
+        catch(IOException ex){
+
+            throw new RuntimeException(ex);
+
+        }
+
+    }
+
 }

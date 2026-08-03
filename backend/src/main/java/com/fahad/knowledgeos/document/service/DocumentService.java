@@ -4,6 +4,7 @@ import com.fahad.knowledgeos.document.dto.request.DocumentRequest;
 import com.fahad.knowledgeos.document.dto.response.DocumentResponse;
 import com.fahad.knowledgeos.document.dto.response.UploadDocumentResponse;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -19,4 +20,6 @@ public interface DocumentService {
     void deleteDocument(Long id);
 
     UploadDocumentResponse upload(MultipartFile file);
+
+    UploadDocumentResponse register(Path path);
 }

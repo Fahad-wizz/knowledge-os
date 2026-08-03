@@ -1,5 +1,11 @@
 package com.fahad.knowledgeos.document.service;
 
+import java.nio.file.Path;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fahad.knowledgeos.auth.security.CurrentUserService;
 import com.fahad.knowledgeos.common.exception.DocumentNotFoundException;
 import com.fahad.knowledgeos.common.mapper.DocumentMapper;
@@ -16,19 +22,16 @@ import com.fahad.knowledgeos.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.stereotype.Service;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRepository documentRepository;
+
     private final StorageService storageService;
+
     private final CurrentUserService currentUserService;
+
     private final UserService userService;
 
     @Override
@@ -43,7 +46,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<DocumentResponse> getAllDocuments() {
+
         Long ownerId = currentUserService.getCurrentUserId();
+
         return documentRepository
                 .findByOwnerId(ownerId)
                 .stream()
@@ -60,8 +65,7 @@ public class DocumentServiceImpl implements DocumentService {
                 documentRepository
                         .findByIdAndOwnerId(id, ownerId)
                         .orElseThrow(() ->
-                            new DocumentNotFoundException(id));
-
+                                new DocumentNotFoundException(id));
 
         return DocumentMapper.toResponse(document);
     }
@@ -84,32 +88,60 @@ public class DocumentServiceImpl implements DocumentService {
     public UploadDocumentResponse upload(MultipartFile file) {
 
         if (file.isEmpty()) {
-            throw new IllegalArgumentException("File is empty");
+
+            throw new IllegalArgumentException("File is empty.");
+
         }
 
-        StoredFile storedFile = storageService.store(file);
+        StoredFile storedFile =
+                storageService.store(file);
+
+        return createDocument(storedFile);
+
+    }
+
+    @Override
+    public UploadDocumentResponse register(Path path) {
+
+        StoredFile storedFile =
+                storageService.register(path);
+
+        return createDocument(storedFile);
+
+    }
+
+    /**
+     * Shared document creation logic.
+     */
+    private UploadDocumentResponse createDocument(
+            StoredFile storedFile) {
 
         Long ownerId =
-        currentUserService.getCurrentUserId();
+                currentUserService.getCurrentUserId();
 
         User owner =
-        userService.findById(ownerId)
-                .orElseThrow();
+                userService.findById(ownerId)
+                        .orElseThrow(() ->
+                                new IllegalStateException(
+                                        "Authenticated user not found."));
 
-        Document document = Document.builder()
-                .owner(owner)
-                .originalFileName(storedFile.getOriginalFileName())
-                .storedFileName(storedFile.getStoredFileName())
-                .contentType(storedFile.getContentType())
-                .extension(storedFile.getExtension())
-                .fileSize(storedFile.getFileSize())
-                .storagePath(storedFile.getStoragePath())
-                .status(DocumentStatus.UPLOADED)
-                .build();
+        Document document =
+                Document.builder()
+                        .owner(owner)
+                        .originalFileName(storedFile.getOriginalFileName())
+                        .storedFileName(storedFile.getStoredFileName())
+                        .contentType(storedFile.getContentType())
+                        .extension(storedFile.getExtension())
+                        .fileSize(storedFile.getFileSize())
+                        .storagePath(storedFile.getStoragePath())
+                        .status(DocumentStatus.UPLOADED)
+                        .build();
 
-        Document saved = documentRepository.save(document);
+        Document saved =
+                documentRepository.save(document);
 
         return DocumentMapper.toUploadResponse(saved);
+
     }
 
 }
