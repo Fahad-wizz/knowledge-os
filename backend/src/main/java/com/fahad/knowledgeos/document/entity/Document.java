@@ -65,4 +65,7 @@ public class Document {
     @JoinColumn(name = "owner_id",nullable = false)
     private User owner;
 
+    @Column(nullable = false)
+    private Long lastModified;
+
 }

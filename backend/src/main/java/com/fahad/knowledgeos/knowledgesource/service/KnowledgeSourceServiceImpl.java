@@ -62,7 +62,7 @@ public class KnowledgeSourceServiceImpl
                         request,
                         owner);
 
-        // ✅ Set business fields here
+        // Set business fields here
         source.setRootPath(normalizedPath);
         source.setStatus(KnowledgeSourceStatus.INDEXING);
 

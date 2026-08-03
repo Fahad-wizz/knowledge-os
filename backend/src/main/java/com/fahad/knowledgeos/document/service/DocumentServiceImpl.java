@@ -2,6 +2,7 @@ package com.fahad.knowledgeos.document.service;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -135,12 +136,26 @@ public class DocumentServiceImpl implements DocumentService {
                         .fileSize(storedFile.getFileSize())
                         .storagePath(storedFile.getStoragePath())
                         .status(DocumentStatus.UPLOADED)
+                        .lastModified(storedFile.getLastModified())
                         .build();
 
         Document saved =
                 documentRepository.save(document);
 
         return DocumentMapper.toUploadResponse(saved);
+
+    }
+
+    @Override
+    public Optional<Document> findIndexedDocument(Path path) {
+
+        Long ownerId =
+                currentUserService.getCurrentUserId();
+
+        return documentRepository
+                .findByOwnerIdAndStoragePath(
+                        ownerId,
+                        path.toAbsolutePath().toString());
 
     }
 

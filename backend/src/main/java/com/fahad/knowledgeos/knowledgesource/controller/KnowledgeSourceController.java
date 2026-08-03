@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.fahad.knowledgeos.knowledgesource.dto.request.KnowledgeSourceRequest;
+import com.fahad.knowledgeos.knowledgesource.dto.response.IndexingSummary;
 import com.fahad.knowledgeos.knowledgesource.dto.response.KnowledgeSourceResponse;
+import com.fahad.knowledgeos.knowledgesource.indexing.KnowledgeSourceIndexer;
 import com.fahad.knowledgeos.knowledgesource.scanner.FolderScanner;
 import com.fahad.knowledgeos.knowledgesource.service.KnowledgeSourceService;
 
@@ -21,6 +23,7 @@ public class KnowledgeSourceController {
 
     private final KnowledgeSourceService service;
     private final FolderScanner folderScanner;
+    private final KnowledgeSourceIndexer indexer;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,20 +64,21 @@ public class KnowledgeSourceController {
     }
 
     @GetMapping("/scan")
-
     public List<String> scan(
-
             @RequestParam String path) {
-
         return folderScanner
-
                 .scan(Path.of(path))
-
                 .stream()
-
                 .map(Path::toString)
-
                 .toList();
+
+    }
+
+    @PostMapping("/{id}/index")
+    public IndexingSummary index(
+            @PathVariable Long id) {
+
+        return indexer.index(id);
 
     }
 

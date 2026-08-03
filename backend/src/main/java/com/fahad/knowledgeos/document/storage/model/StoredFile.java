@@ -25,4 +25,6 @@ public class StoredFile {
 
     private String storagePath;
 
+    private Long lastModified;
+
 }

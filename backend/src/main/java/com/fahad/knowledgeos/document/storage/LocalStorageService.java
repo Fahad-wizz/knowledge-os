@@ -100,6 +100,9 @@ public class LocalStorageService implements StorageService{
                             Files.size(path))
                     .storagePath(
                             path.toAbsolutePath().toString())
+                    .lastModified(
+                            Files.getLastModifiedTime(path)
+                                    .toMillis())
                     .build();
 
         }
