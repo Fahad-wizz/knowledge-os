@@ -1,6 +1,6 @@
 import api from "@/api/axios";
 
-const documentService = {
+const sourceService = {
 
     async upload(file) {
 
@@ -37,4 +37,4 @@ const documentService = {
 
 };
 
-export default documentService;
+export default sourceService;

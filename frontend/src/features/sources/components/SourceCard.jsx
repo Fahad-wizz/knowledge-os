@@ -1,6 +1,6 @@
 import { FileText } from "lucide-react";
 
-export default function DocumentCard({ document }) {
+export default function SourceCard({ document }) {
 
     function formatSize(bytes) {
 

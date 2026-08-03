@@ -1,9 +1,9 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 
-import useDocuments from "../hooks/useDocuments";
-import DocumentCard from "../components/DocumentCard";
+import useSource from "../hooks/useSource";
+import SourceCard from "../components/SourceCard";
 
-export default function DocumentsPage() {
+export default function SourcesPage() {
 
     const {
 
@@ -13,7 +13,7 @@ export default function DocumentsPage() {
 
         error
 
-    } = useDocuments();
+    } = useSource();
 
     return (
 
@@ -55,7 +55,7 @@ export default function DocumentsPage() {
 
                     documents.map(document => (
 
-                        <DocumentCard
+                        <SourceCard
 
                             key={document.id}
 

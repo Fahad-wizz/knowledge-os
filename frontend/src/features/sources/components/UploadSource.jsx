@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import { UploadCloud } from "lucide-react";
 
-import useUploadDocument from "../hooks/useUploadDocument";
+import useUploadSource from "../hooks/useUploadSource";
 
-export default function UploadCard() {
+export default function UploadSource() {
 
     const inputRef = useRef(null);
 
-    const uploadMutation = useUploadDocument();
+    const uploadMutation = useUploadSource();
 
     function handleBrowse() {
 

@@ -33,7 +33,7 @@ export default function LoginForm() {
 
             toast.success("Welcome back!");
 
-            navigate("/dashboard");
+            navigate("/home");
 
         } catch (error) {
 

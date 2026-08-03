@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { deleteDocument } from "../api/documentApi";
+import { deleteDocument } from "../api/sourceApi";
 
 import { toast } from "sonner";
 
-export default function useDeleteDocument() {
+export default function useDeleteSource() {
 
     const queryClient = useQueryClient();
 

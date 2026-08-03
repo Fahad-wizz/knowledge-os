@@ -1,16 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { uploadDocument } from "../api/documentApi";
+import { uploadSource } from "../api/sourceApi";
 
 import { toast } from "sonner";
 
-export default function useUploadDocument() {
+export default function useUploadSource() {
 
     const queryClient = useQueryClient();
 
     return useMutation({
 
-        mutationFn: uploadDocument,
+        mutationFn: uploadSource,
 
         onSuccess() {
 

@@ -2,12 +2,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
-import DashboardPage from "@/features/dashboard/pages/DashboardPage";
+import HomePage from "@/home/pages/HomePage";
 import ProtectedRoute from "./ProtectedRoutes";
-import SearchPage from "@/features/Search/SearchPage";
+import SearchPage from "@/features/Search/pages/SearchPage";
 import ChatPage from "@/features/chat/ChatPage";
-import DocumentsPage from "@/features/documents/pages/DocumentsPage";
 import SettingsPage from "@/features/Settings/SettingsPage";
+import SourcesPage from "@/features/sources/pages/SourcesPage";
 
 export default function AppRoutes() {
 
@@ -31,16 +31,16 @@ export default function AppRoutes() {
             />
 
             <Route
-                path="/dashboard"
+                path="/home"
                 element={<ProtectedRoute>
-                            <DashboardPage/>
+                            <HomePage/>
                         </ProtectedRoute>}
             />
 
             <Route
-                path="/documents"
+                path="/sources"
                 element={<ProtectedRoute>
-                            <DocumentsPage/>
+                            <SourcesPage/>
                         </ProtectedRoute>}
             />
 

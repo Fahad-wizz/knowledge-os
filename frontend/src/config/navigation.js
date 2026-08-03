@@ -8,16 +8,16 @@ import {
 
 export const navigation = [
     {
-        id: "dashboard",
-        label: "Dashboard",
+        id: "home",
+        label: "Home",
         icon: LayoutDashboard,
-        path: "/dashboard"
+        path: "/home"
     },
     {
-        id: "documents",
-        label: "Documents",
+        id: "sources",
+        label: "Sources",
         icon: FileText,
-        path: "/documents"
+        path: "/sources"
     },
     {
         id: "chat",
