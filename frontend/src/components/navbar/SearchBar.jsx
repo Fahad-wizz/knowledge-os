@@ -1,6 +1,30 @@
 import { Search } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function SearchBar() {
+    const navigate = useNavigate();
+
+    const [query, setQuery] = useState("");
+
+    function handleSubmit(e) {
+
+        e.preventDefault();
+
+        if (!query.trim()) {
+
+            return;
+
+        }
+
+        navigate(
+
+            `/search?q=${encodeURIComponent(query)}`
+
+        );
+
+    }
 
     return (
 
@@ -11,7 +35,21 @@ export default function SearchBar() {
                 size={18}
             />
 
+            <form
+            onSubmit={handleSubmit}
+            className="mx-auto max-w-3xl"
+            >
+
             <input
+
+                value={query}
+
+                onChange={(e) =>
+
+                    setQuery(e.target.value)
+
+                }
+
                 type="text"
                 placeholder="Search documents..."
                 className="
@@ -29,6 +67,7 @@ export default function SearchBar() {
                     focus:border-blue-500
                 "
             />
+            </form>
 
         </div>
 

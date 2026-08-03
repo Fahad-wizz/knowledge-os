@@ -1,76 +1,74 @@
-import { FileText } from "lucide-react";
+import { Folder } from "lucide-react";
 
-export default function SourceCard({ document }) {
+import {
+    Card,
+    CardContent
+} from "@/components/ui/card";
 
-    function formatSize(bytes) {
+import SourceStatusBadge from "./SourceStatusBadge";
 
-        if (bytes < 1024) return `${bytes} B`;
+export default function SourceCard({
 
-        if (bytes < 1024 * 1024)
-            return `${(bytes / 1024).toFixed(1)} KB`;
+    source,
 
-        return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    selected,
 
-    }
+    onClick
+
+}) {
 
     return (
 
-        <div
-            className="
-                flex
-                items-center
-                justify-between
-                rounded-xl
-                border
-                border-slate-800
-                bg-slate-900
-                p-4
-            "
+        <Card
+
+            onClick={onClick}
+
+            className={`
+
+                cursor-pointer
+
+                transition-all
+
+                hover:border-blue-500
+
+                ${selected
+                    ? "border-blue-500 bg-slate-900"
+                    : ""
+                }
+
+            `}
+
         >
 
-            <div className="flex items-center gap-4">
+            <CardContent className="flex items-center justify-between p-4">
 
-                <div className="rounded-lg bg-blue-600/20 p-3">
+                <div className="flex items-center gap-3">
 
-                    <FileText className="text-blue-500"/>
+                    <Folder className="h-5 w-5 text-blue-500" />
+
+                    <div>
+
+                        <p className="font-semibold">
+
+                            {source.displayName}
+
+                        </p>
+
+                        <p className="text-xs text-slate-400 truncate">
+
+                            {source.rootPath}
+
+                        </p>
+
+                    </div>
 
                 </div>
 
-                <div>
+                <SourceStatusBadge status={source.status} />
 
-                    <h3 className="font-medium">
+            </CardContent>
 
-                        {document.originalFileName}
-
-                    </h3>
-
-                    <p className="text-sm text-slate-400">
-
-                        {formatSize(document.fileSize)}
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <span
-                className="
-                    rounded-full
-                    bg-emerald-600/20
-                    px-3
-                    py-1
-                    text-xs
-                    font-semibold
-                    text-emerald-400
-                "
-            >
-
-                {document.status}
-
-            </span>
-
-        </div>
+        </Card>
 
     );
 

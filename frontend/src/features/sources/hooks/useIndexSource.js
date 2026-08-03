@@ -1,18 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteSource } from "../api/sourceApi";
+import { indexSource } from "../api/sourceApi";
 import { toast } from "sonner";
 
-export default function useDeleteSource() {
+export default function useIndexSource() {
 
     const queryClient = useQueryClient();
 
     return useMutation({
 
-        mutationFn: deleteSource,
+        mutationFn: indexSource,
 
-        onSuccess() {
-
-            toast.success("Source deleted successfully.");
+        onSuccess(summary) {
+            toast.success(
+                `Indexed ${summary.indexed}, skipped ${summary.skipped}, failed ${summary.failed}.`
+            );
 
             queryClient.invalidateQueries({
 
@@ -28,7 +29,7 @@ export default function useDeleteSource() {
 
                 error.response?.data?.message ??
 
-                "Failed to delete source."
+                "Indexing failed."
 
             );
 

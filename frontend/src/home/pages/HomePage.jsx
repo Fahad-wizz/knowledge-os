@@ -1,9 +1,9 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 
 import WelcomeSection from "@/home/components/WelcomeSection";
-import UploadSource from "@/features/sources/components/UploadSource";
+import UploadSource from "@/features/sources/components/AddSourceDialog";
 import HeroSearch from "@/home/components/HeroSearch";
-import RecentSource from "@/features/sources/components/RecentSource";
+import RecentSource from "@/home/components/RecentSource";
 
 export default function HomePage() {
 

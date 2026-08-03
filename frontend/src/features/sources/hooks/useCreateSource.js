@@ -1,24 +1,26 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { uploadSource } from "../api/sourceApi";
-
+import { createSource } from "../api/sourceApi";
 import { toast } from "sonner";
 
-export default function useUploadSource() {
+export default function useCreateSource() {
 
     const queryClient = useQueryClient();
 
     return useMutation({
 
-        mutationFn: uploadSource,
+        mutationFn: createSource,
 
-        onSuccess() {
+        onSuccess(newSource) {
 
-            toast.success("Document uploaded successfully.");
+            toast.success(
+
+                `${newSource.displayName} added successfully.`
+
+            );
 
             queryClient.invalidateQueries({
 
-                queryKey: ["documents"]
+                queryKey: ["sources"]
 
             });
 
@@ -30,7 +32,7 @@ export default function useUploadSource() {
 
                 error.response?.data?.message ??
 
-                "Upload failed."
+                "Failed to create knowledge source."
 
             );
 
