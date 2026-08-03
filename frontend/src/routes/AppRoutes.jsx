@@ -5,7 +5,7 @@ import RegisterPage from "@/features/auth/pages/RegisterPage";
 import HomePage from "@/home/pages/HomePage";
 import ProtectedRoute from "./ProtectedRoutes";
 import SearchPage from "@/features/Search/pages/SearchPage";
-import ChatPage from "@/features/chat/ChatPage";
+import ChatPage from "@/features/chat/pages/ChatPage";
 import SettingsPage from "@/features/Settings/SettingsPage";
 import SourcesPage from "@/features/sources/pages/SourcesPage";
 
